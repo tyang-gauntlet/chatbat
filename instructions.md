@@ -48,7 +48,7 @@ The whole app is a single page app. No overflow. First screen is the sign in/sig
 
 This is only a skeleton and is subject to change. 
 
-chatcat/
+chatbat/
 ├── public/
 ├── convex/
 ├── app/
