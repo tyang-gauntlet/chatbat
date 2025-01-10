@@ -1,13 +1,16 @@
 "use client";
 import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import { CommandMenu } from "@/components/ui/command-menu";
+import { UserMenu } from "@/components/ui/user-menu";
 
 export default function Home() {
     const { signOut } = useAuthActions();
     return (
         <>
             <AuthLoading>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center min-h-screen">
                     <svg
                         className="animate-spin h-6 w-6 text-primary"
                         xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +34,67 @@ export default function Home() {
                 </div>
             </AuthLoading>
 
+            <Authenticated>
+                <div className="h-screen flex flex-col">
+                    {/* Header */}
+                    <header className="h-14 border-b flex items-center px-4 justify-between">
+                        <h1 className="text-xl font-bold">ChatBat</h1>
+                        <div className="flex-1 max-w-2xl mx-4">
+                            <CommandMenu />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <ModeToggle />
+                            <UserMenu />
+                        </div>
+                    </header>
+
+                    <div className="flex-1 flex overflow-hidden">
+                        {/* Sidebar */}
+                        <aside className="w-60 border-r flex flex-col overflow-y-auto">
+                            <div className="p-4">
+                                <div className="space-y-4">
+                                    <div>
+                                        <h2 className="text-sm font-semibold mb-2">Channels</h2>
+                                        <nav className="space-y-1">
+                                            {/* Channel list will go here */}
+                                        </nav>
+                                    </div>
+                                    <div>
+                                        <h2 className="text-sm font-semibold mb-2">Direct Messages</h2>
+                                        <nav className="space-y-1">
+                                            {/* DM list will go here */}
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+
+                        {/* Main Content */}
+                        <main className="flex-1 flex flex-col overflow-hidden">
+                            <div className="h-14 border-b flex items-center px-4">
+                                {/* Channel/User header will go here */}
+                            </div>
+                            <div className="flex-1 overflow-y-auto">
+                                {/* Messages will go here */}
+                            </div>
+                            <div className="border-t p-4">
+                                {/* Message input will go here */}
+                            </div>
+                        </main>
+
+                        {/* Thread Sidebar - Hidden by default */}
+                        <aside className="w-80 border-l hidden">
+                            {/* Thread content will go here */}
+                        </aside>
+                    </div>
+                </div>
+            </Authenticated>
+
+            <Unauthenticated>
+                <div className="flex justify-center items-center min-h-screen">
+                    <p>Please sign in to continue</p>
+                </div>
+            </Unauthenticated>
         </>
     );
 }
