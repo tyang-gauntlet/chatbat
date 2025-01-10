@@ -73,3 +73,57 @@ chatbat/
 ├── utils/
 └── hooks/
 
+## Database Schema
+
+```mermaid
+erDiagram
+    users ||--o{ channels : "is member"
+    users ||--o{ messages : "sends"
+    users ||--o{ reactions : "creates"
+    users ||--o{ userStatus : "has"
+    channels ||--o{ messages : "contains"
+    messages ||--o{ messages : "has threads"
+    messages ||--o{ reactions : "has"
+
+    users {
+        id string PK
+        tokenIdentifier string
+        email string
+    }
+
+    channels {
+        id string PK
+        name string
+        description string
+        members array
+    }
+
+    messages {
+        id string PK
+        channelId string FK
+        senderId string FK
+        recipientId string FK
+        content string
+        fileUrl string
+        fileType string
+        edited boolean
+        parentId string FK
+        timestamp number
+    }
+
+    reactions {
+        id string PK
+        messageId string FK
+        userId string FK
+        emoji string
+    }
+
+    userStatus {
+        id string PK
+        userId string FK
+        status string
+        customStatus string
+        lastSeen number
+    }
+```
+
