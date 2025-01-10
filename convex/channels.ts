@@ -1,6 +1,5 @@
-import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { Id } from "./_generated/dataModel";
+import { v } from "convex/values";
 
 export const create = mutation({
     args: {
@@ -9,37 +8,39 @@ export const create = mutation({
         members: v.array(v.id("users")),
     },
     handler: async (ctx, args) => {
-        const identity = await ctx.auth.getUserIdentity();
-        if (!identity) throw new Error("Not authenticated");
-        const userId = identity.subject as Id<"users">;
+        return await ctx.db.insert("channels", args);
+    },
+});
 
-        return await ctx.db.insert("channels", {
-            name: args.name,
-            description: args.description,
-            members: [userId, ...args.members],
-            createdBy: userId,
-        });
+export const update = mutation({
+    args: {
+        id: v.id("channels"),
+        name: v.optional(v.string()),
+        description: v.optional(v.string()),
+        members: v.optional(v.array(v.id("users"))),
+    },
+    handler: async (ctx, args) => {
+        const { id, ...rest } = args;
+        return await ctx.db.patch(id, rest);
+    },
+});
+
+export const remove = mutation({
+    args: { id: v.id("channels") },
+    handler: async (ctx, args) => {
+        return await ctx.db.delete(args.id);
     },
 });
 
 export const list = query({
     handler: async (ctx) => {
-        const userId = await ctx.auth.getUserIdentity();
-        if (!userId) throw new Error("Not authenticated");
-
-        return await ctx.db
-            .query("channels")
-            .order("desc")
-            .collect();
+        return await ctx.db.query("channels").collect();
     },
 });
 
-export const get = query({
-    args: { channelId: v.id("channels") },
+export const getById = query({
+    args: { id: v.id("channels") },
     handler: async (ctx, args) => {
-        const userId = await ctx.auth.getUserIdentity();
-        if (!userId) throw new Error("Not authenticated");
-
-        return await ctx.db.get(args.channelId);
+        return await ctx.db.get(args.id);
     },
 }); 

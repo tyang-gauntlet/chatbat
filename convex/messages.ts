@@ -16,7 +16,7 @@ export const send = mutation({
     if (!identity) throw new Error("Not authenticated");
 
     return await ctx.db.insert("messages", {
-      channelId: args.channelId,
+      // channelId: args.channelId,
       senderId: identity.subject as Id<"users">,
       recipientId: args.recipientId,
       content: args.content,
@@ -37,7 +37,7 @@ export const listChannelMessages = query({
 
     return await ctx.db
       .query("messages")
-      .withIndex("by_channel", (q) => q.eq("channelId", args.channelId))
+      // .withIndex("by_channel", (q) => q.eq("channelId", args.channelId))
       .order("desc")
       .collect();
   },

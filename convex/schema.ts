@@ -10,8 +10,6 @@ export default defineSchema({
   channels: defineTable({
     name: v.string(),
     description: v.optional(v.string()),
-    createdBy: v.id("users"),
-    isPrivate: v.optional(v.boolean()),
     members: v.array(v.id("users")),
   }).index("by_name", ["name"]),
 

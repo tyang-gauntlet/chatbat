@@ -4,6 +4,8 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { CommandMenu } from "@/components/command-menu";
 import { UserMenu } from "@/components/user-menu";
+import { ChannelList } from "@/components/channels/channel-list";
+import { DirectMessageList } from "@/components/channels/direct-message-list";
 
 export default function Home() {
     const { signOut } = useAuthActions();
@@ -50,22 +52,10 @@ export default function Home() {
 
                     <div className="flex-1 flex overflow-hidden">
                         {/* Sidebar */}
-                        <aside className="w-60 border-r flex flex-col overflow-y-auto">
-                            <div className="p-4">
-                                <div className="space-y-4">
-                                    <div>
-                                        <h2 className="text-sm font-semibold mb-2">Channels</h2>
-                                        <nav className="space-y-1">
-                                            {/* Channel list will go here */}
-                                        </nav>
-                                    </div>
-                                    <div>
-                                        <h2 className="text-sm font-semibold mb-2">Direct Messages</h2>
-                                        <nav className="space-y-1">
-                                            {/* DM list will go here */}
-                                        </nav>
-                                    </div>
-                                </div>
+                        <aside className="w-60 border-r flex flex-col">
+                            <div className="p-4 space-y-4">
+                                <ChannelList />
+                                <DirectMessageList />
                             </div>
                         </aside>
 
