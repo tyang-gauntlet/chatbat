@@ -1,9 +1,9 @@
 "use client";
 import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { CommandMenu } from "@/components/ui/command-menu";
-import { UserMenu } from "@/components/ui/user-menu";
+import { ModeToggle } from "@/components/mode-toggle";
+import { CommandMenu } from "@/components/command-menu";
+import { UserMenu } from "@/components/user-menu";
 
 export default function Home() {
     const { signOut } = useAuthActions();

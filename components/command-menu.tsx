@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 
 export function CommandMenu() {
     return (
